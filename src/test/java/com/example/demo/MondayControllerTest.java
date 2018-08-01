@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class MondayControllerTest {
 
-  private MondayTdd vendingMachine;
   private Random random;
   private int[] products = new int[]{10, 50, 90, 25, 35, 45};
   private int index;
@@ -30,7 +28,6 @@ public class MondayControllerTest {
   private MockMvc mockMvc;
 
   public void MondayTdd(){
-    vendingMachine = new MondayTdd();
     this.random = new Random();
     this.index = random.nextInt(products.length);
   }
@@ -56,6 +53,8 @@ public class MondayControllerTest {
         .andExpect(status().isOk()).andExpect(jsonPath("$.status", equalTo(true)));
   }
 
+
+
   @Test
   public void shouldAcceptQuarters() throws Exception {
     mockMvc.perform(post("/insertCoin").param("coin", "25")
@@ -70,6 +69,9 @@ public class MondayControllerTest {
         .andExpect(status().isOk()).andExpect(jsonPath("$.status", equalTo(true)));
   }
 
+
+
+
   @Test
   public void shouldAcceptTwoDollarBills() throws Exception {
     mockMvc.perform(post("/insertNote").param("note", "2")
@@ -79,7 +81,6 @@ public class MondayControllerTest {
 
   @Test
   public void shouldAllowUserToSelectProduct() throws Exception {
-
     mockMvc.perform(post("/selectProduct").param("product", String.valueOf(products[index]))
     .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
     .andExpect(jsonPath("$.status", equalTo(true)));
@@ -98,7 +99,7 @@ public class MondayControllerTest {
 
     mockMvc.perform(post("/refundProducts")
         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-        .andExpect(jsonPath("$.price", equalTo(Products.CANDY.getPrice()+Products.Soda.getPrice())));
+        .andExpect(jsonPath("$.price", equalTo(Products.CANDY.getPrice() + Products.Soda.getPrice())));
   }
 
   @Test
@@ -109,7 +110,4 @@ public class MondayControllerTest {
         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
         .andExpect(jsonPath("$.price", equalTo(10)));
   }
-
-
-
 }

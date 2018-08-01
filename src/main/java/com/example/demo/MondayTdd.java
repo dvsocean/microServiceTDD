@@ -13,8 +13,6 @@ public class MondayTdd {
   private List<Products> cart = new ArrayList<>();
   private int totalPrice;
 
-  //select product
-
   public MyResponse insertCoin(int value) {
 
     if (value == 1 || value == 5 || value == 10 || value == 25) {
@@ -66,7 +64,6 @@ public class MondayTdd {
 
   public boolean isProductSelected() {
     int selected = getSelectedProduct();
-
     return false;
   }
 
@@ -76,26 +73,21 @@ public class MondayTdd {
     return new MyResponse(true);
   }
 
-
   public MyResponse cancelTransaction() {
     MyResponse myResponse = new MyResponse(false);
     cart.clear();
-
     if (cart.isEmpty()) {
       myResponse = new MyResponse(true);
       myResponse.setPrice(totalPrice);
       totalPrice = 0;
     }
-
     return myResponse;
-
   }
 
   public void clearShoppingCart() {
     cart.clear();
     totalPrice = 0;
   }
-
 
   public List<Products> getCart() {
     return cart;
@@ -112,7 +104,7 @@ public class MondayTdd {
     MyResponse myResponse = new MyResponse(true);
     myResponse.setPrice(money - MondayTdd.mondayTdd.getTotalPrice());
     myResponse.setReturnProducts(MondayTdd.mondayTdd.getCart());
-    MondayTdd.mondayTdd.clearShoppingCart();
+    //MondayTdd.mondayTdd.clearShoppingCart();
 
     return myResponse;
   }
