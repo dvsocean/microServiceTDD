@@ -18,10 +18,6 @@ public class BookCatalog {
     }
   }
 
-  public HashMap<String, Book> getCatalog(){
-    return this.catalog;
-  }
-
   public Book searchByAuthorName(String author) {
     return catalog.get(author);
   }

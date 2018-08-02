@@ -6,6 +6,6 @@ public class LaunchPad {
   private static String[] myArray = new String[]{"Honda", "Nissan", "Toyota", "Ford", "Acura", "Toyota", "Buick", "Honda", "Chevy", "Toyota"};
 
   public static void main(String[] args) {
-    dup.removeDuplicates(myArray);
+
   }
 }
