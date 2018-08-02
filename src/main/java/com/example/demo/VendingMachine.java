@@ -3,10 +3,11 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MondayTdd {
+public class VendingMachine {
 
-  public static MondayTdd mondayTdd = new MondayTdd();
+  public static VendingMachine vendingMachine = new VendingMachine();
 
+  private int powerSupply;
   private int coinValue;
   private int noteValue;
   private int product;
@@ -64,7 +65,11 @@ public class MondayTdd {
 
   public boolean isProductSelected() {
     int selected = getSelectedProduct();
-    return false;
+    if(selected > 0){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public MyResponse addProduct(Products item) {
@@ -79,7 +84,6 @@ public class MondayTdd {
     if (cart.isEmpty()) {
       myResponse = new MyResponse(true);
       myResponse.setPrice(totalPrice);
-      totalPrice = 0;
     }
     return myResponse;
   }
@@ -99,13 +103,27 @@ public class MondayTdd {
 
   public MyResponse completeTransaction(List<Products> products, Integer money) {
     for (Products product : products) {
-      MondayTdd.mondayTdd.addProduct(product);
+      VendingMachine.vendingMachine.addProduct(product);
     }
     MyResponse myResponse = new MyResponse(true);
-    myResponse.setPrice(money - MondayTdd.mondayTdd.getTotalPrice());
-    myResponse.setReturnProducts(MondayTdd.mondayTdd.getCart());
-    //MondayTdd.mondayTdd.clearShoppingCart();
+    myResponse.setPrice(money - VendingMachine.vendingMachine.getTotalPrice());
+    myResponse.setReturnProducts(VendingMachine.vendingMachine.getCart());
+    //VendingMachine.vendingMachine.clearShoppingCart();
 
     return myResponse;
+  }
+
+  public void unplug() {
+    this.powerSupply = 0;
+  }
+
+  public void plugBackInAndResetSystem() {
+    this.powerSupply = 220;
+  }
+
+  public int getVoltage() {
+    MyResponse res = new MyResponse(true);
+    res.setVoltage(this.powerSupply);
+    return res.getVoltage();
   }
 }

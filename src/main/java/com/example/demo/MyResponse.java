@@ -7,6 +7,16 @@ public class MyResponse {
   private Boolean status;
   private Integer price;
   private List<Products> returnProducts;
+  private int voltage;
+
+  public int setVoltage(int voltage){
+    this.voltage = voltage;
+    return voltage;
+  }
+
+  public int getVoltage(){
+    return this.voltage;
+  }
 
   public MyResponse(Boolean status) {
     this.status = status;

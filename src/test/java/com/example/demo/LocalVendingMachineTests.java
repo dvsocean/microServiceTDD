@@ -7,16 +7,16 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MondayTests {
+public class LocalVendingMachineTests {
 
-  private MondayTdd vendingMachine;
+  private VendingMachine vendingMachine;
   private Random random;
   private int[] products = new int[]{10, 50, 90, 25, 35, 45};
   private int index;
 
   @Before
   public void setup(){
-    vendingMachine = new MondayTdd();
+    vendingMachine = new VendingMachine();
     this.random = new Random();
     this.index = random.nextInt(products.length);
   }
@@ -24,25 +24,25 @@ public class MondayTests {
   @Test
   public void shouldAcceptPennies(){
     vendingMachine.insertCoin(1);
-    assertEquals(true, vendingMachine.getLastInsertedCoinValue());
+    assertEquals(1, vendingMachine.getLastInsertedCoinValue());
   }
 
   @Test
   public void shouldAcceptNickles(){
     vendingMachine.insertCoin(5);
-    assertEquals(true, vendingMachine.getLastInsertedCoinValue());
+    assertEquals(5, vendingMachine.getLastInsertedCoinValue());
   }
 
   @Test
   public void shouldAcceptDimes(){
     vendingMachine.insertCoin(10);
-    assertEquals(true, vendingMachine.getLastInsertedCoinValue());
+    assertEquals(10, vendingMachine.getLastInsertedCoinValue());
   }
 
   @Test
   public void shouldAcceptQuarters(){
     vendingMachine.insertCoin(25);
-    assertEquals(true, vendingMachine.getLastInsertedCoinValue());
+    assertEquals(25, vendingMachine.getLastInsertedCoinValue());
   }
 
   @Test
@@ -61,5 +61,13 @@ public class MondayTests {
   public void shouldAllowUserToSelectProduct(){
     vendingMachine.selectProduct(products[index]);
     assertTrue(vendingMachine.isProductSelected());
+  }
+
+  //Allow reset operation for vending machine supplier
+  @Test
+  public void shouldAllowResetOperationForSupplier(){
+    vendingMachine.unplug();
+    vendingMachine.plugBackInAndResetSystem();
+    assertEquals(220, vendingMachine.getVoltage());
   }
 }

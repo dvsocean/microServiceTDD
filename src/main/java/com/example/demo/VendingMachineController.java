@@ -7,36 +7,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MondayController {
+public class VendingMachineController {
 
   @PostMapping("/insertCoin")
   public MyResponse insertCoin(@RequestParam("coin") int coin) {
-    return  MondayTdd.mondayTdd.insertCoin(coin);
+    return  VendingMachine.vendingMachine.insertCoin(coin);
   }
 
   @PostMapping("/insertNote")
   public MyResponse insertBill(@RequestParam("note") int note){
-    return  MondayTdd.mondayTdd.insertBill(note);
+    return  VendingMachine.vendingMachine.insertBill(note);
   }
 
   @PostMapping("/selectProduct")
   public MyResponse selectProduct(@RequestParam("product") int product){
-    return  MondayTdd.mondayTdd.selectProduct(product);
+    return  VendingMachine.vendingMachine.selectProduct(product);
   }
 
   @PostMapping("/addProduct")
   public MyResponse addProduct(@RequestParam("product") Products product){
-    return  MondayTdd.mondayTdd.addProduct(product);
+    return  VendingMachine.vendingMachine.addProduct(product);
   }
 
   @PostMapping("/refundProducts")
   public MyResponse giveRefund(){
-    return MondayTdd.mondayTdd.cancelTransaction();
+    return VendingMachine.vendingMachine.cancelTransaction();
   }
 
   @PostMapping("/completeTransaction")
   public MyResponse completeTransaction(@RequestParam("product")List<Products> products, @RequestParam("money")Integer money){
-    return MondayTdd.mondayTdd.completeTransaction(products, money);
+    return VendingMachine.vendingMachine.completeTransaction(products, money);
+  }
+
+  @GetMapping("/resetMachine")
+  public int resetMachine(){
+    VendingMachine.vendingMachine.unplug();
+    VendingMachine.vendingMachine.plugBackInAndResetSystem();
+    return VendingMachine.vendingMachine.getVoltage();
   }
 
   @GetMapping("/restAssuredEndpoint")

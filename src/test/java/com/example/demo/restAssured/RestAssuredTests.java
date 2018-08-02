@@ -8,7 +8,7 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-public class RestAss {
+public class RestAssuredTests {
 
   private int[] products = new int[]{10, 50, 90, 25, 35, 45};
   private Random random = new Random();
@@ -72,6 +72,12 @@ public class RestAss {
     RestAssured.given().param("product", Products.SNACK, Products.SNACK, Products.CANDY)
         .param("money", 139)
         .when().post("/completeTransaction").then().log().all();
+  }
+
+  //Allow reset operation for vending machine supplier
+  @Test
+  public void shouldAllowResetOperationForSupplier(){
+
   }
 
 

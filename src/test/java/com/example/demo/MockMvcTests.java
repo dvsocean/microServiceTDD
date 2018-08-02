@@ -1,11 +1,14 @@
 package com.example.demo;
 
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Random;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class MondayControllerTest {
+public class MockMvcTests {
 
   private Random random;
   private int[] products = new int[]{10, 50, 90, 25, 35, 45};
@@ -27,7 +30,11 @@ public class MondayControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
-  public void MondayTdd(){
+  private VendingMachine vm;
+
+  @Before
+  public void setup(){
+    vm = new VendingMachine();
     this.random = new Random();
     this.index = random.nextInt(products.length);
   }
@@ -86,7 +93,6 @@ public class MondayControllerTest {
     .andExpect(jsonPath("$.status", equalTo(true)));
   }
 
-
   @Test
   public void shouldAllowUserToReceiveRefund() throws Exception {
     mockMvc.perform(post("/addProduct").param("product", Products.CANDY.toString())
@@ -110,4 +116,14 @@ public class MondayControllerTest {
         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
         .andExpect(jsonPath("$.price", equalTo(10)));
   }
+
+  //Allow reset operation for vending machine supplier
+  @Test
+  public void shouldAllowResetOperationForSupplier() throws Exception {
+    mockMvc.perform(get("/resetMachine")
+        .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        .andExpect(content().string("220"));
+  }
+
+
 }
